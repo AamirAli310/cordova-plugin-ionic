@@ -10,7 +10,7 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "description": "Ionic Cordova SDK",
+  "description": "Customize Ionic Cordova SDK to test the plugin features with localhost server (single api call to check latest version of app on server, See NodeJS Server.js file) ",  
   "scripts": {
     "apply-dev": "npm run build && ./scripts/apply-changes.sh",
     "create-dev": "./scripts/create-local-app.sh",
@@ -27,10 +27,10 @@
     "release": "npm run build && np --any-branch",
     "docs": "./scripts/docs.sh"
   },
-  "repository": "https://github.com/ionic-team/cordova-plugin-ionic.git",
-  "issue": "https://github.com/ionic-team/cordova-plugin-ionic/issues",
+  "repository": "https://github.com/AamirAli310/cordova-plugin-ionic.git",
+  "issue": "https://github.com/AamirAli310/cordova-plugin-ionic/issues",
   "bugs": {
-    "url": "https://github.com/ionic-team/cordova-plugin-ionic/issues"
+    "url": "https://github.com/AamirAli310/cordova-plugin-ionic/issues"
   },
   "keywords": [
     "ionic",
@@ -52,6 +52,11 @@
     {
       "name": "William Pelrine",
       "email": "rudy@ionic.io"
+    },
+    {
+      "name": "Aamir Ali",
+      "email1": "aamir.ali.inbox@gmail.com",
+      "email2": "aadin@scad.ae"
     }
   ],
   "license": "MIT",

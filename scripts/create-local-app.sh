@@ -3,6 +3,7 @@ set -o errexit
 set -o nounset
 
 # Stop CLI prompts and init config vars
+echo 'Static App ID  Variable Created'
 APP_ID=${IONIC_APP_ID:-2de70dab}
 APP_NAME=${IONIC_APP_NAME:-testapp}
 CHANNEL=${IONIC_CHANNEL:-Master}
@@ -10,6 +11,7 @@ CI=1
 UPDATE_METHOD=${IONIC_UPDATE_METHOD:-auto}
 BACKGROUND_DURATION=${IONIC_BACKGROUND_DURATION:-1}
 
+echo 'Before run build command '+$APP_NAME
 # Build the plugin ts
 npm run build
 

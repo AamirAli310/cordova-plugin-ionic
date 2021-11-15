@@ -2,7 +2,9 @@
 set -o errexit
 
 # Script vars
+echo $APP_PATH
 APP_PATH=${IONIC_APP_NAME:-../testapp}
+echo $IONIC_APP_NAME
 
 # Sync to iOS
 cp ./dist/* ${APP_PATH}/platforms/ios/www/plugins/cordova-plugin-ionic/dist/
