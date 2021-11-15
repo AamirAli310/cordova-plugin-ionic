@@ -13,8 +13,8 @@
     <js-module src="dist/guards.js" name="guards">
         <runs/>
     </js-module>
-    <preference name="APP_ID"/>
-    <preference name="CHANNEL_NAME"/>    
+    <preference name="APP_ID" default="MyTestApp"/>
+    <preference name="CHANNEL_NAME" default="UAT"/>    
     <preference name="UPDATE_API" default="http://localhost:3000"/>
     <preference name="UPDATE_METHOD" default="background"/>
     <preference name="MAX_STORE" default="2"/>
