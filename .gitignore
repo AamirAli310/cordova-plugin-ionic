@@ -4,3 +4,4 @@ dist/
 tmp/
 .idea/
 package-lock.json
+.history

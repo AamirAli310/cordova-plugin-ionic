@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-ionic" version="5.5.1">
     <name>cordova-plugin-ionic</name>
-    <description>Ionic Cordova SDK</description>
+    <description>Customize Ionic Cordova SDK to run plugin with localhost server (single api call to check latest version of app on server, See NodeJS Server.js file) </description>
     <license>MIT</license>
     <keywords>ionic,cordova,deploy,liveupdates,mobile,hybrid,ecosystem:cordova,cordova-android,cordova-ios</keywords>
-    <repo>https://github.com/ionic-team/cordova-plugin-ionic.git</repo>
-    <issue>https://github.com/ionic-team/cordova-plugin-ionic/issues</issue>
+    <repo>https://github.com/AamirAli310/cordova-plugin-ionic.git</repo>
+    <issue>https://github.com/AamirAli310/cordova-plugin-ionic/issues</issue>
     <js-module src="dist/common.js">
         <clobbers target="IonicCordova"/>
     </js-module>
@@ -13,8 +13,8 @@
         <runs/>
     </js-module>
     <preference name="APP_ID"/>
-    <preference name="CHANNEL_NAME"/>
-    <preference name="UPDATE_API" default="https://api.ionicjs.com"/>
+    <preference name="CHANNEL_NAME"/>    
+    <preference name="UPDATE_API" default="http://localhost:3000"/>
     <preference name="UPDATE_METHOD" default="background"/>
     <preference name="MAX_STORE" default="2"/>
     <preference name="MIN_BACKGROUND_DURATION" default="30"/>
@@ -28,22 +28,22 @@
             <preference name="DisableDeploy" value="false"/>
             <preference name="AutoHideSplashScreen" value="false"/>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonAppId">
+        <config-file target="*-Info.plist" parent="scad_app_id">
             <string>$APP_ID</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonChannelName">
+        <config-file target="*-Info.plist" parent="scad_channel_name">
             <string>$CHANNEL_NAME</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonApi">
+        <config-file target="*-Info.plist" parent="scad_update_api">
             <string>$UPDATE_API</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonUpdateMethod">
+        <config-file target="*-Info.plist" parent="scad_update_method">
             <string>$UPDATE_METHOD</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonMaxVersions">
+        <config-file target="*-Info.plist" parent="scad_max_versions">
             <string>$MAX_STORE</string>
         </config-file>
-        <config-file target="*-Info.plist" parent="IonMinBackgroundDuration">
+        <config-file target="*-Info.plist" parent="scad_min_background_duration">
             <string>$MIN_BACKGROUND_DURATION</string>
         </config-file>
         <header-file src="src/ios/IonicCordovaCommon.h"/>
@@ -61,12 +61,12 @@
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
         </config-file>
         <config-file target="res/values/strings.xml" parent="/resources">
-            <string name="ionic_app_id">$APP_ID</string>
-            <string name="ionic_channel_name">$CHANNEL_NAME</string>
-            <string name="ionic_update_api">$UPDATE_API</string>
-            <string name="ionic_update_method">$UPDATE_METHOD</string>
-            <string name="ionic_max_versions">$MAX_STORE</string>
-            <string name="ionic_min_background_duration">$MIN_BACKGROUND_DURATION</string>
+            <string name="scad_app_id">$APP_ID</string>
+            <string name="scad_channel_name">$CHANNEL_NAME</string>
+            <string name="scad_update_api">$UPDATE_API</string>
+            <string name="scad_update_method">$UPDATE_METHOD</string>
+            <string name="scad_max_versions">$MAX_STORE</string>
+            <string name="scad_min_background_duration">$MIN_BACKGROUND_DURATION</string>
         </config-file>
         <framework src="src/android/cordovapluginionic.gradle" custom="true" type="gradleReference"/>
         <source-file src="src/android/IonicCordovaCommon.java" target-dir="src/com/ionicframework/common"/>
@@ -77,5 +77,5 @@
         </js-module>
     </platform>
     <dependency id="cordova-plugin-ionic-webview" version=">=2.1.4"/>
-    <author>Ionic</author>
+    <author>Aamir Ali</author>
 </plugin>

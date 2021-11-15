@@ -422,13 +422,13 @@ public class IonicCordovaCommon extends CordovaPlugin {
     int maxV;
     int minBackgroundDuration;
     try {
-      maxV = Integer.parseInt(getStringResourceByName("ionic_max_versions"));
+      maxV = Integer.parseInt(getStringResourceByName("scad_max_versions"));
     } catch(NumberFormatException e) {
       maxV = 2;
     }
 
     try {
-      minBackgroundDuration = Integer.parseInt(getStringResourceByName("ionic_min_background_duration"));
+      minBackgroundDuration = Integer.parseInt(getStringResourceByName("scad_min_background_duration"));
     } catch(NumberFormatException e) {
       minBackgroundDuration = 30;
     }
@@ -444,12 +444,12 @@ public class IonicCordovaCommon extends CordovaPlugin {
       versionCode = 0;
     }
 
-    String appId = getStringResourceByName("ionic_app_id");
+    String appId = getStringResourceByName("scad_app_id");
     j.put("appId", appId);
     j.put("disabled", preferences.getBoolean("DisableDeploy", false));
-    j.put("channel", getStringResourceByName("ionic_channel_name"));
-    j.put("host", getStringResourceByName("ionic_update_api"));
-    j.put("updateMethod", getStringResourceByName("ionic_update_method"));
+    j.put("channel", getStringResourceByName("scad_channel_name"));
+    j.put("host", getStringResourceByName("scad_update_api"));
+    j.put("updateMethod", getStringResourceByName("scad_update_method"));
     j.put("maxVersions", maxV);
     j.put("minBackgroundDuration", minBackgroundDuration);
     j.put("binaryVersion", versionName);
