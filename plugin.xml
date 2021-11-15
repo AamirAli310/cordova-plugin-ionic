@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-ionic" version="5.5.1">
     <name>cordova-plugin-ionic</name>
-    <description>Customize Ionic Cordova SDK to run plugin with localhost server (single api call to check latest version of app on server, See NodeJS Server.js file) </description>
+    <description>Customize Ionic Cordova SDK to test the plugin features with localhost server (single api call to check latest version of app on server, See NodeJS Server.js file) </description>
     <license>MIT</license>
     <keywords>ionic,cordova,deploy,liveupdates,mobile,hybrid,ecosystem:cordova,cordova-android,cordova-ios</keywords>
     <repo>https://github.com/AamirAli310/cordova-plugin-ionic.git</repo>
@@ -18,6 +18,7 @@
     <preference name="UPDATE_METHOD" default="background"/>
     <preference name="MAX_STORE" default="2"/>
     <preference name="MIN_BACKGROUND_DURATION" default="30"/>
+
     <hook type="before_prepare" src="hooks/beforePrepare.js"/>
     <!-- ios -->
     <platform name="ios">
