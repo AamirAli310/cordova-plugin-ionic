@@ -21,7 +21,7 @@
     if ([prefs stringForKey:@"uuid"] == nil) {
         [prefs setObject:[[NSUUID UUID] UUIDString] forKey:@"uuid"];
     }
-    [prefs synchronize];
+    [prefs synchronize];    
 }
 
 - (void) remove:(CDVInvokedUrlCommand*)command {
@@ -120,7 +120,7 @@
     json[@"binaryVersionName"] = versionName;
     json[@"device"] = uuid;
     json[@"dataDirectory"] = [[NSURL fileURLWithPath:cordovaDataDirectory] absoluteString];
-    NSLog(@"Got app info: %@", json);
+    NSLog(@"**AA: Got app info: %@", json);
 
     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:json] callbackId:command.callbackId];
 
@@ -150,7 +150,7 @@
 
     // No saved prefs found get them all from config
     // Make sure to initialize empty updates object
-    NSLog(@"initing updates key");
+    NSLog(@"**AA: Update key Added here");
     nativeConfig[@"updates"] = [[NSDictionary alloc] init];
     NSLog(@"Initialized App Prefs: %@", nativeConfig);
 

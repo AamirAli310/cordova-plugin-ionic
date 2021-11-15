@@ -58,6 +58,7 @@ public class IonicCordovaCommon extends CordovaPlugin {
     // Initialize shared preferences
     Context cxt = this.cordova.getActivity().getApplicationContext();
     this.prefs = cxt.getSharedPreferences("com.ionic.common.preferences", Context.MODE_PRIVATE);
+    System.console("**AA:Application Preferences: ", this.prefs);
     assetManager = cordova.getContext().getAssets();
 
     // Get or generate a plugin UUID
@@ -86,6 +87,9 @@ public class IonicCordovaCommon extends CordovaPlugin {
    * @return                  True if the action was valid, false if not.
    */
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    System.console("**AA:Executing Plugin Call: ");
+    Object data = (args.length > 0)?args.getJSONObject(0):"None";
+    System.console("**Action: "+action + ", Arguments: ",data);
     if (action.equals("getAppInfo")) {
       this.getAppInfo(callbackContext);
     } else if (action.equals("getPreferences")) {

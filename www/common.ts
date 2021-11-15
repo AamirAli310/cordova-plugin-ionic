@@ -162,7 +162,7 @@ class IonicDeployImpl {
     }
     const prefs = this._savedPreferences;
     const appInfo = this.appInfo;
-    const endpoint = `${prefs.host}/apps/${prefs.appId}/channels/check-device`;
+    const endpoint = `${prefs.host}/apps/check-updates`;
 
     const device_details = {
       binary_version: prefs.binaryVersionName,
@@ -176,8 +176,10 @@ class IonicDeployImpl {
     const body = {
       channel_name: prefs.channel,
       app_id: prefs.appId,
+      app_version_id: prefs.currentVersionId,
+      build: prefs.currentBuildId,
       device: device_details,
-      plugin_version: this.PLUGIN_VERSION,
+      plugin_version: this.PLUGIN_VERSION,      
       manifest: true
     };
 
