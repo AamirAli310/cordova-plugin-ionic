@@ -1,6 +1,7 @@
 node_modules/
 .DS_Store
-# Uncomment it for plugin development
+# To install plugin properly, we've to expose dist folder on git,
+# bcz Ionic Teams use Ionic Deploy command to create Runtime-variable which then used to call BASH Script to create app and copy dist files into Platform>Plugins>WWW files
 # dist/
 tmp/
 .idea/
