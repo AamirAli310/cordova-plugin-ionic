@@ -109,7 +109,7 @@ System:
 
 
 ## Step-8 (Server Side: In my case it's 'Localhost')
-- A Server is created using Nodejs you get more help from: https://www.youtube.com/watch?v=wxbQP1LMZsw
+- A Server is created using Nodejs you can get more help from: <a href="https://github.com/AamirAli310/MyLocalServer/blob/main/README.md" rel="follow">here</a>
 
 **- http://localhost:3000/apps/check-updates** (Plugin will make a hit on this call with some input data:)
 
