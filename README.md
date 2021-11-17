@@ -10,4 +10,4 @@ CUSTOMIZE Version of Ionic Live Update SDK
 - 3 Working fine on Ionic Cordova Apps but not test on Capacitor mode.
 - 4 Plugin-Variable dependencies changed (Default values given all the variable of plugin so that it can install without error)
 - 5 If user wants to set default value at time of Installation of plugin, will be using --variable after plugin name.
-- 6 Full Example along with steps is available <a href="https://github.com/AamirAli310/cordova-plugin-ionic/blob/customize-code-push/Plugin-Guideline.md" rel="follow">here</a>
+- 6 Full Example along with steps is available <a href="https://github.com/AamirAli310/cordova-plugin-ionic/blob/customize-code-push/Plugin-Guideline.md" rel="follow">How can I Install & Integrate With My Own Server?</a>
