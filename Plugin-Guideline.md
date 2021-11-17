@@ -46,16 +46,19 @@ System:
 - For Testing cycle you may create own localhost server.
 - Noted: If you forget to pass above variable, no issue, The plugin will install with default value which you can change in config.xml/package.json
 
-## Step-3 Example-  ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="MyApp101" --variable CHANNEL_NAME="AA-UAT" --variable UPDATE_API="http://localhost:3000"
+## Step-3 Example-  
+- ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="MyApp101" --variable CHANNEL_NAME="AA-UAT" --variable UPDATE_API="http://localhost:3000"
 
 ## Step-4 (Add Platform, If Step-1 performed)
 - ionic cordova platform add ios
-- 
-## Step-4 (After Plugin Installed successfully)
+
+## Step-5 (After Plugin Installed successfully)
 - Check config.xml and you should able to see your provided information under cordova-plugin-ionic plugin tag. Now time to prepare App with our own server's API info
 - ionic cordova prepare ios
 
-## Step-5 (Run App on Simulator [If Server is running on Local machine, then it's best option to test])
+## Step-6 (Run App on Simulator [If Server is running on Local machine, then it's best option to test])
+- Using Xcode to run the project, Go to Project > Platforms > iOS> Open MyApp.xcworkspace file.
+- Select simulator in the target-device and press run button .
 - If Apps loaded landing page of the app or stop on splash-screen, don't worry.
 - Check on console, You should able to see below message : 
 - Got Native app preferences: {
@@ -75,7 +78,7 @@ System:
 -   API-End Point which will check for new version availability is: (I made single API Call which can serve all the app's of a company)
 -   http://localhost:3000/apps/check-updates
 
-## Step-6: Deploy your build on your server
+## Step-7: Deploy your build on your server/local-matchine (make sure the URL field in the server response must match the directory names & structure as per provided Input data (App_ID, Channel_Name, app_version_id)
 -   Need to copy www folder and place it on your server and put it in an structural directory, like in my case i've 4 apps running... 
 -   For example Directory structure on server will be like:
 -   -   server-path:/apps
@@ -86,8 +89,9 @@ System:
 -                         - 1.0.0 (Rename www to 1.0.0)
 -                         - 1.0.1
 
--     For multi-platforms :
--    server-path:/apps
+
+- For multi-platforms : 
+-   -  server-path:/apps
 -                 - App1 (make sure it match your given App ID)"
 -                     - iOS
 -                       - Production
@@ -104,7 +108,7 @@ System:
 -   Noted: Your www must have pro-manifiest.json file.
 
 
-## Step-6 (Server Side: In my case it's 'Localhost')
+## Step-8 (Server Side: In my case it's 'Localhost')
 - A Server is created using Nodejs you get more help from: https://www.youtube.com/watch?v=wxbQP1LMZsw
 
 **- http://localhost:3000/apps/check-updates** (Plugin will make a hit on this call with some input data:)
@@ -130,7 +134,7 @@ System:
 - Response Example (If New Version Available):
 {
     "data": {
-        "url": "https://MyTestServer.com/AATests/apps/TestPluginApp/UAT/1.0.3/pro-manifest.json",
+        "url": "https://localhost:3000/AATests/apps/**TestPluginApp**/**UAT**/**1.0.3**/pro-manifest.json",
         "incompatibleUpdateAvailable": false,
         "build": 1003,
         "partial": false,
@@ -141,7 +145,9 @@ System:
 }
 
 **Noted:**
-url field contains pro-manifiest.json (1.0.3 == www) which will be used for comparision on client-end to download changed files for 1.0.3 version (un-changed files will be coppied by plugin auto-metically in this new version).
+- url field contains pro-manifiest.json (1.0.3 == www) which will be used for comparision on client-end (Plugin stuff) to download changed files for 1.0.3 version (un-changed files will be coppied by plugin auto-metically in this new version).
+- inside URL field after apps, APP_ID/CHANNEL_NAME/NEW_VERSION_ID (Your Server will decide after comparing app_version_id field from Input Data)
+
 
 - After app reload function execution finished, plugin will again make check-updates call and this time input & output of will be like this:
 - http://localhost:3000/apps/check-updates
