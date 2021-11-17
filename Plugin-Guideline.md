@@ -40,10 +40,12 @@ System:
 
 ## Step-3 (Live Update Starts): Common for both (New | Existing) App 
 - ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="{Your-App-Name}" --variable CHANNEL_NAME="{Environment-Mode}" --variable UPDATE_API="{Your-Server-Name}"
-- APP_ID: Same ID will be sent by Plugin to server to check for new version.
+- APP_ID: Same ID will be sent by Plugin to server to check for new version. 
 - CHANNEL_NAME: It's mode of deployment.... Normally it is Production/Staging, You can use whatever suitable to you but it has to manage on the Server end accordingly.
 - UPDATE_API: It is your own Server host name like http://www.google.com, http://localhost:3000, http://api.myserver.com
-- For Testing cycle you may create own localhost server.
+- For Testing cycle you may create own localhost server. Check my repositiry <a href="https://github.com/AamirAli310/MyLocalServer/blob/main/README.md" rel="follow">'Local Server in NodeJS'</a>
+- If you're using my repo: MyLocalServer then use App_ID: 'TestPluginApp', CHANNEL_NAME: 'UAT', UPDATE_API: "http://localhost:3000'
+
 - Noted: If you forget to pass above variable, no issue, The plugin will install with default value which you can change in config.xml/package.json
 
 ## Step-3 Example-  
@@ -78,11 +80,14 @@ System:
 -   API-End Point which will check for new version availability is: (I made single API Call which can serve all the app's of a company)
 -   http://localhost:3000/apps/check-updates
 
-## Step-7: Deploy your build on your server/local-matchine (make sure the URL field in the server response must match the directory names & structure as per provided Input data (App_ID, Channel_Name, app_version_id)
--   Need to copy www folder and place it on your server and put it in an structural directory, like in my case i've 4 apps running... 
+## Step-7: Deploy your build on your server/local-matchine.
+-  Make sure the URL field in the server response must match the directory names & structure as per provided Input data (App_ID, Channel_Name, app_version_id)
+-  Now We need to copy www folder and place it on your server and put it in an structural directory.
+-  If You're running my local server respository then deployment path will be: Path_Of_MyLocalServer_Directory > AATests > apps > TestPluginApp(Rename it as per your ) > UAT: 
+-  Paste www from your app Create new Directory here as 1.0.2
 -   For example Directory structure on server will be like:
 -   -   server-path:/apps
--                 - App1 (make sure it match your given App ID)"
+-                 - TestPluginApp (make sure it match your given App ID)"
 -                       - Production
 -                         - 1.0.0                       
 -                       - UAT
@@ -92,7 +97,7 @@ System:
 
 - For multi-platforms : 
 -   -  server-path:/apps
--                 - App1 (make sure it match your given App ID)"
+-                 - TestPluginApp (make sure it match your given App ID)"
 -                     - iOS
 -                       - Production
 -                         - 1.0.0                       
@@ -109,7 +114,7 @@ System:
 
 
 ## Step-8 (Server Side: In my case it's 'Localhost')
-- A Server is created using Nodejs you can get more help from: <a href="https://github.com/AamirAli310/MyLocalServer/blob/main/README.md" rel="follow">here</a>
+- A Server is created using Nodejs which may help you to test on your own machine. <a href="https://github.com/AamirAli310/MyLocalServer/blob/main/README.md" rel="follow">'Run Local Server'</a>
 
 **- http://localhost:3000/apps/check-updates** (Plugin will make a hit on this call with some input data:)
 
