@@ -50,6 +50,9 @@ System:
 
 ## Step-3 Example-  
 - ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="TestPluginApp" --variable CHANNEL_NAME="UAT" --variable UPDATE_API="http://localhost:3000"
+- On successful plugin installation, you should able to see below lines on your console:
+- Adding cordova-plugin-ionic to package.json
+- Saved plugin info for "cordova-plugin-ionic" to config.xml
 
 ## Step-4 (Add Platform, If Step-1 performed)
 - ionic cordova platform add ios
