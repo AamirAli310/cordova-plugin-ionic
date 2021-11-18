@@ -49,7 +49,7 @@ System:
 - Noted: If you forget to pass above variable, no issue, The plugin will install with default value which you can change in config.xml/package.json
 
 ## Step-3 Example-  
-- ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="MyApp101" --variable CHANNEL_NAME="AA-UAT" --variable UPDATE_API="http://localhost:3000"
+- ionic cordova plugin add https://github.com/AamirAli310/cordova-plugin-ionic.git --variable APP_ID="TestPluginApp" --variable CHANNEL_NAME="UAT" --variable UPDATE_API="http://localhost:3000"
 
 ## Step-4 (Add Platform, If Step-1 performed)
 - ionic cordova platform add ios
