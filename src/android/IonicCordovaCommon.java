@@ -58,7 +58,8 @@ public class IonicCordovaCommon extends CordovaPlugin {
     // Initialize shared preferences
     Context cxt = this.cordova.getActivity().getApplicationContext();
     this.prefs = cxt.getSharedPreferences("com.ionic.common.preferences", Context.MODE_PRIVATE);
-    System.console("**AA:Application Preferences: ", this.prefs);
+    System.out.println("**AA:In initialize Fun > Application Preferences: "+ this.prefs.toString());
+    
     assetManager = cordova.getContext().getAssets();
 
     // Get or generate a plugin UUID
@@ -87,9 +88,10 @@ public class IonicCordovaCommon extends CordovaPlugin {
    * @return                  True if the action was valid, false if not.
    */
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-    System.console("**AA:Executing Plugin Call: ");
-    Object data = (args.length > 0)?args.getJSONObject(0):"None";
-    System.console("**Action: "+action + ", Arguments: ",data);
+    
+    Object data = (args.length() > 0)?args.getJSONObject(0):"None";
+    System.out.println("**AA: Action: "+action + ", Arguments: "+data.toString());
+
     if (action.equals("getAppInfo")) {
       this.getAppInfo(callbackContext);
     } else if (action.equals("getPreferences")) {
@@ -269,6 +271,9 @@ public class IonicCordovaCommon extends CordovaPlugin {
     final PluginResult result;
 
     try {
+
+      System.out.println("**AA:In downloadFile Fun > Source Location: "+ url + ", Saving Location: "+ dest);
+
       URL u = new URL(url);
       InputStream is = u.openStream();
 
