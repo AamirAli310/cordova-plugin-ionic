@@ -222,7 +222,7 @@ var IonicDeployImpl = /** @class */ (function () {
                         }
                         prefs = this._savedPreferences;
                         appInfo = this.appInfo;
-                        endpoint = prefs.host + "/apps/check-updates";
+                        endpoint = prefs.host + "/apps/check_updates";
                         device_details = {
                             binary_version: prefs.binaryVersionName,
                             device_id: appInfo.device || null,
