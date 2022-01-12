@@ -162,7 +162,7 @@ class IonicDeployImpl {
     }
     const prefs = this._savedPreferences;
     const appInfo = this.appInfo;
-    const endpoint = `${prefs.host}/apps/check-updates`;
+    const endpoint = `${prefs.host}/apps/check_updates`;
 
     const device_details = {
       binary_version: prefs.binaryVersionName,
@@ -211,7 +211,7 @@ class IonicDeployImpl {
           lastUsed: new Date().toISOString(),
           url: checkForUpdateResp.url,
           versionId: checkForUpdateResp.snapshot,
-          buildId: checkForUpdateResp.build
+          buildId: checkForUpdateResp.build          
         };
         await this._savePrefs(prefs);
       }
