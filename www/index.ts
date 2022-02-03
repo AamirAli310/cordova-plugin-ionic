@@ -35,9 +35,9 @@ export class DeployClass implements IDeployPluginAPI {
     return deploy.checkForUpdate();
   }
 
-  async downloadUpdate(progress?: CallbackFunction<number>) {
+  async downloadUpdate(progress?: CallbackFunction<number>, knownFileExtensions?: string[]) {  
     const deploy = await deviceready;
-    return deploy.downloadUpdate(progress);
+    return deploy.downloadUpdate(progress, knownFileExtensions);
   }
 
   async extractUpdate(progress?: CallbackFunction<number>) {

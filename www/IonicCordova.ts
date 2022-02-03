@@ -44,9 +44,13 @@ export interface DeployPluginAPI {
    *
    * @param progress A progress callback function which will be called with a number representing the percent of completion of the download and prepare.
    *
-   * @return  true if the download succeeded
+   * @return  {status: true , skipFiles:[]}
+   * status: true if the download succeeded
+   * skipFiles: files url's string array
+   * DEPRICATED: @return  true if the download succeeded
    */
-  downloadUpdate(progress?: CallbackFunction<number>): Promise<boolean>;
+  downloadUpdate(progress?: CallbackFunction<number>, knownFileExtensions?: string[]): Promise<any>;
+
 
   /**
    * @description Extract a downloaded bundle of updated files.

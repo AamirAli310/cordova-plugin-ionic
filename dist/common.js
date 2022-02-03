@@ -83,6 +83,8 @@ var IonicDeployImpl = /** @class */ (function () {
         this.SNAPSHOT_CACHE = 'ionic_built_snapshots';
         this.MANIFEST_FILE = 'pro-manifest.json';
         this.PLUGIN_VERSION = '5.5.1';
+        // eslint-disable-next-line @typescript-eslint/member-ordering
+        this.skipToDownload = [];
         this.appInfo = appInfo;
         this._savedPreferences = preferences;
     }
@@ -292,13 +294,14 @@ var IonicDeployImpl = /** @class */ (function () {
             });
         });
     };
-    IonicDeployImpl.prototype.downloadUpdate = function (progress) {
+    IonicDeployImpl.prototype.downloadUpdate = function (progress, knownFileExtensions) {
         return __awaiter(this, void 0, void 0, function () {
-            var prefs, _a, fileBaseUrl, manifestJson, diffedManifest;
+            var prefs, response, _a, fileBaseUrl, manifestJson, diffedManifest;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         prefs = this._savedPreferences;
+                        response = { status: false, skipFiles: [] };
                         if (!(prefs.availableUpdate && prefs.availableUpdate.state === UpdateState.Available)) return [3 /*break*/, 6];
                         return [4 /*yield*/, this._fetchManifest(prefs.availableUpdate.url)];
                     case 1:
@@ -309,20 +312,23 @@ var IonicDeployImpl = /** @class */ (function () {
                         return [4 /*yield*/, this.prepareUpdateDirectory(prefs.availableUpdate.versionId)];
                     case 3:
                         _b.sent();
-                        return [4 /*yield*/, this._downloadFilesFromManifest(fileBaseUrl, diffedManifest, prefs.availableUpdate.versionId, progress)];
+                        return [4 /*yield*/, this._downloadFilesFromManifest(fileBaseUrl, diffedManifest, prefs.availableUpdate.versionId, progress, knownFileExtensions)];
                     case 4:
                         _b.sent();
                         prefs.availableUpdate.state = UpdateState.Pending;
                         return [4 /*yield*/, this._savePrefs(prefs)];
                     case 5:
                         _b.sent();
-                        return [2 /*return*/, true];
-                    case 6: return [2 /*return*/, false];
+                        response.status = true;
+                        response['skipFiles'] = this.skipToDownload.slice(); //AA: To return new copy of same array.      
+                        this.skipToDownload = []; //RESET ARRAY TO EMPTY
+                        return [2 /*return*/, response];
+                    case 6: return [2 /*return*/, response];
                 }
             });
         });
     };
-    IonicDeployImpl.prototype._downloadFilesFromManifest = function (baseUrl, manifest, versionId, progress) {
+    IonicDeployImpl.prototype._downloadFilesFromManifest = function (baseUrl, manifest, versionId, progress, knownFileExtensions) {
         return __awaiter(this, void 0, void 0, function () {
             var size, downloaded, beforeDownloadTimer, downloadFile, downloads, count, maxBatch, numberBatches, _i, manifest_1, entry;
             var _this = this;
@@ -335,8 +341,8 @@ var IonicDeployImpl = /** @class */ (function () {
                             size += i.size;
                         });
                         beforeDownloadTimer = new Timer('downloadTimer');
-                        downloadFile = function (file) { return __awaiter(_this, void 0, void 0, function () {
-                            var base, newUrl, filePath;
+                        downloadFile = function (file, knownFExt) { return __awaiter(_this, void 0, void 0, function () {
+                            var base, newUrl, filePath, parts, ext, proceedToDownload;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
@@ -344,9 +350,20 @@ var IonicDeployImpl = /** @class */ (function () {
                                         newUrl = new URL(file.href, baseUrl);
                                         newUrl.search = base.search;
                                         filePath = Path.join(this.getSnapshotCacheDir(versionId), file.href);
+                                        parts = file.href.split('.');
+                                        ext = parts[parts.length - 1];
+                                        proceedToDownload = true;
+                                        if (knownFExt.length > 0 && !knownFExt.includes(ext)) {
+                                            proceedToDownload = false;
+                                            console.warn('**Unknown Extention Found:', newUrl.toString());
+                                            this.skipToDownload.push(newUrl.toString());
+                                        }
+                                        if (!proceedToDownload) return [3 /*break*/, 2];
                                         return [4 /*yield*/, this._fileManager.downloadAndWriteFile(newUrl.toString(), filePath)];
                                     case 1:
                                         _a.sent();
+                                        _a.label = 2;
+                                    case 2:
                                         // Update progress
                                         downloaded += file.size;
                                         if (progress) {
@@ -378,7 +395,7 @@ var IonicDeployImpl = /** @class */ (function () {
                         downloads = [];
                         _a.label = 3;
                     case 3:
-                        downloads.push(downloadFile(entry));
+                        downloads.push(downloadFile(entry, knownFileExtensions));
                         _a.label = 4;
                     case 4:
                         _i++;
@@ -1037,15 +1054,17 @@ var IonicDeploy = /** @class */ (function () {
             });
         });
     };
-    IonicDeploy.prototype.downloadUpdate = function (progress) {
+    IonicDeploy.prototype.downloadUpdate = function (progress, knownFileExtensions) {
         return __awaiter(this, void 0, void 0, function () {
+            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        response = { status: false, skipFiles: [] };
                         if (!!this.disabled) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.delegate];
-                    case 1: return [2 /*return*/, (_a.sent()).downloadUpdate(progress)];
-                    case 2: return [2 /*return*/, false];
+                    case 1: return [2 /*return*/, (_a.sent()).downloadUpdate(progress, knownFileExtensions)];
+                    case 2: return [2 /*return*/, response];
                 }
             });
         });

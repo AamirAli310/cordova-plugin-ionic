@@ -3,7 +3,7 @@ export declare class DeployClass implements IDeployPluginAPI {
     configure(config: IDeployConfig): Promise<void>;
     getConfiguration(): Promise<ICurrentConfig>;
     checkForUpdate(): Promise<CheckForUpdateResponse>;
-    downloadUpdate(progress?: CallbackFunction<number>): Promise<boolean>;
+    downloadUpdate(progress?: CallbackFunction<number>, knownFileExtensions?: string[]): Promise<any>;
     extractUpdate(progress?: CallbackFunction<number>): Promise<boolean>;
     reloadApp(): Promise<boolean>;
     sync(options: ISyncOptions, progress?: CallbackFunction<number>): Promise<ISnapshotInfo | undefined>;

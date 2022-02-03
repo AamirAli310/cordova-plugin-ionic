@@ -221,21 +221,28 @@ class IonicDeployImpl {
     throw new Error(`Error Status ${resp.status}: ${jsonResp ? jsonResp.error.message : await resp.text()}`);
   }
 
-  async downloadUpdate(progress?: CallbackFunction<number>): Promise<boolean> {
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  skipToDownload: Array<string> = [];
+
+  async downloadUpdate(progress?: CallbackFunction<number>, knownFileExtensions?: string[]): Promise<any> {
     const prefs = this._savedPreferences;
+    const response = { status: false, skipFiles: <any>[]};
     if (prefs.availableUpdate && prefs.availableUpdate.state === UpdateState.Available) {
       const { fileBaseUrl, manifestJson } = await this._fetchManifest(prefs.availableUpdate.url);
       const diffedManifest = await this._diffManifests(manifestJson);
       await this.prepareUpdateDirectory(prefs.availableUpdate.versionId);
-      await this._downloadFilesFromManifest(fileBaseUrl, diffedManifest,  prefs.availableUpdate.versionId, progress);
+      await this._downloadFilesFromManifest(fileBaseUrl, diffedManifest, prefs.availableUpdate.versionId, progress, knownFileExtensions);
       prefs.availableUpdate.state = UpdateState.Pending;
       await this._savePrefs(prefs);
-      return true;
+      response.status = true;
+      response['skipFiles'] = this.skipToDownload.slice();//AA: To return new copy of same array.      
+      this.skipToDownload = [];//RESET ARRAY TO EMPTY
+      return response;
     }
-    return false;
+    return response;
   }
 
-  private async _downloadFilesFromManifest(baseUrl: string, manifest: ManifestFileEntry[], versionId: string, progress?: CallbackFunction<number>) {
+  private async _downloadFilesFromManifest(baseUrl: string, manifest: ManifestFileEntry[], versionId: string, progress?: CallbackFunction<number>, knownFileExtensions?: string[]) {
     console.log('Downloading update...');
     let size = 0, downloaded = 0;
     manifest.forEach(i => {
@@ -243,12 +250,25 @@ class IonicDeployImpl {
     });
 
     const beforeDownloadTimer = new Timer('downloadTimer');
-    const downloadFile = async (file: ManifestFileEntry) => {
+    const downloadFile = async (file: ManifestFileEntry, knownFExt: any) => {
       const base = new URL(baseUrl);
       const newUrl = new URL(file.href, baseUrl);
       newUrl.search = base.search;
       const filePath = Path.join(this.getSnapshotCacheDir(versionId), file.href);
-      await this._fileManager.downloadAndWriteFile(newUrl.toString(), filePath);
+      const parts = file.href.split('.');
+      const ext = parts[parts.length-1];
+      let proceedToDownload = true;//AA: BY DEFAULT DOWNLOAD ALL FILES
+
+      if (knownFExt.length > 0 && !knownFExt.includes(ext)){
+        proceedToDownload = false;
+        console.warn('**Unknown Extention Found:', newUrl.toString());
+        this.skipToDownload.push(newUrl.toString());
+      }
+
+      if(proceedToDownload){
+        await this._fileManager.downloadAndWriteFile(newUrl.toString(), filePath);
+      }
+
       // Update progress
       downloaded += file.size;
       if (progress) {
@@ -271,7 +291,7 @@ class IonicDeployImpl {
         beforeDownloadTimer.diff(`downloaded batch ${count} of ${numberBatches} downloads. Done downloading ${count * maxBatch} of ${manifest.length} files`);
         downloads = [];
       }
-      downloads.push(downloadFile(entry));
+      downloads.push(downloadFile(entry, knownFileExtensions));
     }
     if (downloads.length) {
       count++;
@@ -649,8 +669,8 @@ class IonicDeploy implements IDeployPluginAPI {
       }
     });
   }
-
-  async checkForUpdate(): Promise<CheckForUpdateResponse> {
+  
+  async checkForUpdate(): Promise<CheckForUpdateResponse> {    
     if (!this.disabled) {
       return (await this.delegate).checkForUpdate();
     }
@@ -684,9 +704,11 @@ class IonicDeploy implements IDeployPluginAPI {
     return true;
   }
 
-  async downloadUpdate(progress?: CallbackFunction<number>): Promise<boolean> {
-    if (!this.disabled) return (await this.delegate).downloadUpdate(progress);
-    return false;
+
+  async downloadUpdate(progress?: CallbackFunction<number>, knownFileExtensions?: string[]): Promise<any> {    
+    const response = { status: false, skipFiles: <any>[] };
+    if (!this.disabled) return (await this.delegate).downloadUpdate(progress, knownFileExtensions);
+    return response;
   }
 
   async extractUpdate(progress?: CallbackFunction<number>): Promise<boolean> {

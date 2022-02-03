@@ -89,7 +89,7 @@ var DeployClass = /** @class */ (function () {
             });
         });
     };
-    DeployClass.prototype.downloadUpdate = function (progress) {
+    DeployClass.prototype.downloadUpdate = function (progress, knownFileExtensions) {
         return __awaiter(this, void 0, void 0, function () {
             var deploy;
             return __generator(this, function (_a) {
@@ -97,7 +97,7 @@ var DeployClass = /** @class */ (function () {
                     case 0: return [4 /*yield*/, deviceready];
                     case 1:
                         deploy = _a.sent();
-                        return [2 /*return*/, deploy.downloadUpdate(progress)];
+                        return [2 /*return*/, deploy.downloadUpdate(progress, knownFileExtensions)];
                 }
             });
         });
