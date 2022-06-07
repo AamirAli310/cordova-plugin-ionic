@@ -90,7 +90,7 @@ var IonicDeployImpl = /** @class */ (function () {
     }
     IonicDeployImpl.prototype._handleInitialPreferenceState = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var isOnline, updateMethod, _a, e_1;
+            var updateMethod, _a, e_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: 
@@ -99,12 +99,6 @@ var IonicDeployImpl = /** @class */ (function () {
                     case 1:
                         // make sure we're not going to redirect to a stale version
                         _b.sent();
-                        isOnline = navigator && navigator.onLine;
-                        if (!isOnline) {
-                            console.warn('The device appears to be offline. Loading last available version and skipping update checks.');
-                            this.reloadApp();
-                            return [2 /*return*/];
-                        }
                         updateMethod = this._savedPreferences.updateMethod;
                         _a = updateMethod;
                         switch (_a) {
@@ -214,14 +208,10 @@ var IonicDeployImpl = /** @class */ (function () {
     };
     IonicDeployImpl.prototype.checkForUpdate = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var isOnline, prefs, appInfo, endpoint, device_details, body, timeout, request, resp, jsonResp, checkForUpdateResp, _a, _b, _c;
+            var prefs, appInfo, endpoint, device_details, body, timeout, request, resp, jsonResp, checkForUpdateResp, _a, _b, _c;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        isOnline = navigator && navigator.onLine;
-                        if (!isOnline) {
-                            throw new Error('The device is offline.');
-                        }
                         prefs = this._savedPreferences;
                         appInfo = this.appInfo;
                         endpoint = prefs.host + "/apps/check_updates";

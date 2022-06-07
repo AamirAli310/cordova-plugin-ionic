@@ -80,12 +80,13 @@ class IonicDeployImpl {
   async _handleInitialPreferenceState() {
     // make sure we're not going to redirect to a stale version
     await this.cleanupStaleVersions();
-    const isOnline = navigator && navigator.onLine;
-    if (!isOnline) {
-      console.warn('The device appears to be offline. Loading last available version and skipping update checks.');
-      this.reloadApp();
-      return;
-    }
+    //AA: Marked commented because nav.online return false status of internet.
+    // const isOnline = navigator && navigator.onLine;
+    // if (!isOnline) {
+    //   console.warn('The device appears to be offline. Loading last available version and skipping update checks.');
+    //   this.reloadApp();
+    //   return;
+    // }
 
     const updateMethod = this._savedPreferences.updateMethod;
     switch (updateMethod) {
@@ -156,10 +157,12 @@ class IonicDeployImpl {
   }
 
   async checkForUpdate(): Promise<CheckForUpdateResponse> {
-    const isOnline = navigator && navigator.onLine;
-    if (!isOnline) {
-      throw new Error('The device is offline.');
-    }
+    //AA: Marked commented because nav.online return false status of internet.
+    // const isOnline = navigator && navigator.onLine;
+    // if (!isOnline) {
+    //   throw new Error('The device is offline.');
+    // }
+    
     const prefs = this._savedPreferences;
     const appInfo = this.appInfo;
     const endpoint = `${prefs.host}/apps/check_updates`;
